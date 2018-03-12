@@ -41,7 +41,9 @@
             <td><input type="submit" name="submit" value="Шукати запис" /></td>
         </tr>
     </table>
-</form>
+    </form>
+
+    <div class="search_table">
     {% if search_form %}
         <table>
         <tr>
@@ -51,15 +53,19 @@
             <th>Тривалiсть</th>
             <th>Номер</th>
         </tr>
-        <tr>
-            <td>{{ search_form.type_call }}</td>
-            <td>{{ search_form.time_start }}</td>
-            <td>{{ search_form.time_end }}</td>
-            <td>---</td>
-            <td>{{ search_form.number }}</td>
-        </tr>
+        {% for i in search_form %}
+            <tr>
+                <td>{{ i.type_call }}</td>
+                <td>{{ i.time_start }}</td>
+                <td>{{ i.time_end }}</td>
+                <td>{{ i.interval }}</td>
+                <td>{{ i.number }}</td>
+            </tr>
+        {% endfor %}
         </table>
     {% endif %}
+    </div>
+
 {% endif %}
 
 </body>

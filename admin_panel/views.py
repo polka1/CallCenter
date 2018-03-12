@@ -1,10 +1,16 @@
 from django.shortcuts import render, redirect
+from django.contrib import admin
+
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import Group
+
 from admin_panel.forms import AddCallForm, CheckCallForm
-from django.contrib import admin
 from admin_panel.models import CallInfo
+
+import time
+import datetime
+import pandas as pd
 
 from tornado_websockets.websocket import WebSocket
 
@@ -60,7 +66,14 @@ def insert_data(request):
         if request.method == 'POST':
             form = AddCallForm(request.POST)
             if form.is_valid():
-                # form.author = request.user
+                print(form.instance.time_start)
+                ft_start = time.mktime(time.strptime(str(form.instance.time_start.time()), "%H:%M:%S"))
+                ft_end = time.mktime(time.strptime(str(form.instance.time_end.time()), "%H:%M:%S"))
+                interval = str(datetime.timedelta(seconds=ft_end - ft_start))
+                # form. ('interval', interval)
+                form.instance.interval = interval
+                print(form.instance.interval)
+                # print(form.interval)
                 form.save(request)
                 # return insert_data(request)
             else:
@@ -80,13 +93,16 @@ def check_data(request):
             form = CheckCallForm(request.POST)
 
             if form.is_valid():
-                # TODO Поиск по моделе и отдаем в рендер
-                # print(form['time_start'].value())
-                formated_time = str(form.instance.time_start.strftime("%Y-%m-%d %H:%M:%s %Z"))
-                print(formated_time)
-                requested_form = CallInfo.objects.filter(time_start=formated_time).order_by('-time_start')
-                search_form = True
-                form = requested_form
+                # TODO Ajax
+                formated_formDatetime = str(form.instance.time_start.strftime("%Y-%m-%d %H:%M:%S %Z"))
+                formated_pd_formDatetime = pd.to_datetime(formated_formDatetime).to_pydatetime()
+
+                formated_datetimeNow = datetime.datetime.now().replace(microsecond=0).isoformat(' ')
+                formated_pd_datetimeNow = pd.to_datetime(formated_datetimeNow).to_pydatetime()
+                print(formated_pd_formDatetime, '\n', formated_pd_datetimeNow)
+                print('update_time_sec: ', form.cleaned_data.get('update_time_sec'))
+                requested_form = CallInfo.objects.filter(time_start=formated_pd_formDatetime)#.order_by('-time_start')
+                search_form = requested_form
         else:
             form = CheckCallForm()
 

@@ -1,5 +1,4 @@
 from django.db import models
-from django.conf import settings
 
 from django.contrib.auth.models import User
 
@@ -25,3 +24,4 @@ class CallInfo(models.Model):
     time_end = models.DateTimeField()
     number = models.CharField(max_length=13)
     type_call = models.CharField(max_length=9, choices=TYPE_CALL_CHOICES)
+    interval = models.CharField(max_length=16)
