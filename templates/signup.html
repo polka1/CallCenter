@@ -1,0 +1,54 @@
+{#{% extends 'base.html' %}#}
+
+{% block head %}
+    <title>Log in | Django site admin</title>
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/login.css" />
+    <meta name="robots" content="NONE,NOARCHIVE" />
+{% endblock %}
+
+{% block content %}
+{#  <h2>Sign up</h2>#}
+    <body class=" login">
+    <!-- Container -->
+    <div id="container">
+        <!-- Header -->
+        <div id="header">
+            <div id="branding">
+                <h1 id="site-name"><a href="/">Кол центр - регистрация пользователя</a></h1>
+            </div>
+        </div>
+        <!-- END Header -->
+        <!-- Content -->
+        <div id="content" class="colM">
+            <div id="content-main">
+
+{#{% csrf_token %}#}
+            <form method="post">
+            {% csrf_token %}
+                {% for field in form %}
+                  <p>
+                    {{ field.label_tag }}<br>
+                    {{ field }}
+                    {% if field.help_text %}
+{#                        {% autoescape off %}#}
+{#                            <small style="color: grey">{{ field.help_text }}</small>#}
+{#                        {% endautoescape %}#}
+                    {% endif %}
+                    {% for error in field.errors %}
+                      <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                  </p>
+                {% endfor %}
+                <div class="submit-row">
+                    <label>&nbsp;</label><input type="submit" value="Log in" />
+                </div>
+            </form>
+            </div>
+            <br class="clear" />
+        </div>
+        <!-- END Content -->
+        <div id="footer"></div>
+    </div>
+    <!-- END Container -->
+{% endblock %}

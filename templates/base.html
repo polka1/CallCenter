@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+    {% endblock %}
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="login">
+<h1>CallCenter</h1>
+<a href="/accounts/login/">Увiйти</a>
+<a href="{% url 'signup' %}">Реєстрацiя</a>
+{% block content %}
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,37 @@
+<body class=" login"
+      data-admin-utc-offset="0">
+    <!-- Container -->
+    <div id="container">
+        <!-- Header -->
+        <div id="header">
+            <div id="branding">
+                <h1 id="site-name"><a href="/">Кол центр</a></h1>
+            </div>
+        </div>
+        <!-- END Header -->
+        <!-- Content -->
+        <div id="content" class="colM">
+            <div id="content-main">
+                <form action="/admin/login/?next=/admin/" method="post" id="login-form"><input type='hidden' name='csrfmiddlewaretoken' value='qz4Od0hY7PdzshzFaUClltN0H2ZW6ELkGrkt8lMURp9Y3ohnZEGWo0Lxve66PXx8' />
+                  <div class="form-row">
+
+                    <label class="required" for="id_username">Username:</label> <input type="text" name="username" maxlength="254" id="id_username" required autofocus />
+                  </div>
+                  <div class="form-row">
+
+                    <label class="required" for="id_password">Password:</label> <input type="password" name="password" id="id_password" required />
+                    <input type="hidden" name="next" value="/admin/" />
+                  </div>
+
+
+                  <div class="submit-row">
+                    <label>&nbsp;</label><input type="submit" value="Log in" />
+                  </div>
+                </form>
+            </div>
+            <br class="clear" />
+        </div>
+        <!-- END Content -->
+        <div id="footer"></div>
+    </div>
+    <!-- END Container -->
