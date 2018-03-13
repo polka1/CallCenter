@@ -21,18 +21,20 @@
     <script type="text/javascript" src="/static/admin/js/calendar.js"></script>
     <script type="text/javascript" src="/static/admin/js/admin/DateTimeShortcuts.js"></script>
     <script type="text/javascript" src="/jsi18n/"></script>
+    <script type="text/javascript" src="{% static 'scripts/main.js' %}"></script>
     <script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
     <script type="text/javascript" src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'admin/css/forms.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'admin/css/base.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'admin/css/widgets.css' %}"/>
 
+
 </head>
 <body>
 
 {% if request.user %}
     <a href="{% url 'profile' %}">Профiль</a> <a href="{% url 'insert_data' %}">Внести данi</a> <a href="{% url 'logout' %}">Вийти</a><br/>
-    <form method="post" >
+    <form method="post" id="search_form">
     {% csrf_token %}
     <table>
         {{ form.as_table }}
@@ -43,7 +45,8 @@
     </table>
     </form>
 
-    <div class="search_table">
+{#    Эту форму нужно обновлять#}
+    <div class="container" id="search_table">
     {% if search_form %}
         <table>
         <tr>
@@ -65,6 +68,8 @@
         </table>
     {% endif %}
     </div>
+{#    Эту форму нужно обновлять#}
+
 
 {% endif %}
 

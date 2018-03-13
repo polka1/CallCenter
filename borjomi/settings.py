@@ -19,6 +19,12 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
 
+STATICFILES_DIRS = [STATIC_DIR, ]
+
+STATIC_URL = '/static/'
+
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -123,7 +129,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/profile/'
 
 
