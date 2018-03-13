@@ -28,7 +28,6 @@ def signup(request):
         if form.is_valid():
             print('[signup]: reg success')
             form.save()
-            # messages.success(request, 'Account created successfully')
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
@@ -51,9 +50,9 @@ def profile(request):
         context_dict = {
             'in_check_group': is_member(request.user, GROUP_CHECK)
         }
-        print('[context_dict]: ',context_dict)
-        print('[GROUP_INSER]: ',is_member(request.user, GROUP_INSER))
-        print('[request.user]: ',request.user)
+        print('[context_dict]: ', context_dict)
+        print('[GROUP_INSER]: ', is_member(request.user, GROUP_INSER))
+        print('[request.user]: ', request.user)
         return render(request, 'profile.html', context=context_dict)
     return render(request, 'base.html')
 
@@ -63,20 +62,13 @@ def insert_data(request):
         if request.method == 'POST':
             form = AddCallForm(request.POST)
             if form.is_valid():
-                print(form.instance.time_start)
                 ft_start = time.mktime(time.strptime(str(form.instance.time_start.time()), "%H:%M:%S"))
                 ft_end = time.mktime(time.strptime(str(form.instance.time_end.time()), "%H:%M:%S"))
                 interval = (datetime.timedelta(seconds=ft_end - ft_start))
-                # form. ('interval', interval)
                 form.instance.interval = interval
-                print(form.instance.interval)
-                # print(form.interval)
                 form.save(request)
-                # return insert_data(request)
             else:
                 print(form.errors)
-                # print(form.time_start)
-                # print(form.time_end)
         else:
             form = AddCallForm()
         return render(request, 'insert_data.html', {'form': form})
@@ -145,9 +137,9 @@ def ajax_data_gen(request):
         incoming_interval_sum = time_sum(incoming_calls)
         incoming_count = incoming_calls.count()
 
-        outcaming_calls = unfiltered_callInfo_data.filter(type_call='Вихiдний')
-        outcaming_interval_sum = time_sum(outcaming_calls)
-        outcaming_count = outcaming_calls.count()
+        outcoming_calls = unfiltered_callInfo_data.filter(type_call='Вихiдний')
+        outcaming_interval_sum = time_sum(outcoming_calls)
+        outcaming_count = outcoming_calls.count()
 
         all_interval_sum = time_sum(unfiltered_callInfo_data)
         sum_count_calls = unfiltered_callInfo_data.count()
@@ -156,9 +148,9 @@ def ajax_data_gen(request):
             'incoming_calls': incoming_calls,
             'incoming_interval_sum': incoming_interval_sum,
             'incoming_count': incoming_count,
-            'outcaming_calls': outcaming_calls,
-            'outcaming_interval_sum': outcaming_interval_sum,
-            'outcaming_count': outcaming_count,
+            'outcoming_calls': outcoming_calls,
+            'outcoming_interval_sum': outcaming_interval_sum,
+            'outcoming_count': outcaming_count,
             'all_interval_sum': all_interval_sum,
             'sum_count_calls': sum_count_calls
         })

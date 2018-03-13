@@ -28,6 +28,9 @@
     <link rel="stylesheet" type="text/css" href="{% static 'admin/css/base.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'admin/css/widgets.css' %}"/>
 
+{#    Нужна для диаграммы!#}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+{#    Нужна для диаграммы!#}
 
 </head>
 <body>
@@ -45,7 +48,10 @@
     </table>
     </form>
 
-{#    Эту форму нужно обновлять#}
+{#    Сюда вставляется шаблон с таблицей данных#}
+{#    Если раскоментировать этот блок и убрать из #search_form ссылку на вьюху - это отключит динамическое обновление#}
+{#    и данные будут обновляться только по нажатию на кнопку.#}
+{#    Так же исчезнет график (подключить график займет не более 10 минут)#}
     <div class="container" id="search_table">
     {% include 'search_form.html' %}
 {#    {% if search_form %}#}
@@ -69,7 +75,7 @@
 {#        </table>#}
 {#    {% endif %}#}
     </div>
-{#    Эту форму нужно обновлять#}
+{#    Сюда вставляется шаблон с таблицей данных#}
 
 {% endif %}
 

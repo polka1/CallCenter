@@ -1,8 +1,38 @@
 {% load staticfiles %}
 
 {#Блок шаблона check_data#}
-{#<div class="container" id="search_table">#}
-    {% if sum_count_calls %}
+{% if incoming_calls %}
+{% block header %}
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var outcoming_count = document.getElementById('outcoming_count').getAttribute('value');
+        var incoming_count = document.getElementById('incoming_count').getAttribute('value');
+        console.log(incoming_count, '\n', outcoming_count);
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['Вихідні',      parseInt(outcoming_count)],
+          ['Вхідні',     parseInt(incoming_count)]
+        ]);
+
+        var options = {
+          title: 'Статистика усiх дзвiнкiв'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+{% endblock %}
+{% endif %}
+
+{% if sum_count_calls %}
+    <div class="qwe" style="margin:0px auto; width:100%">
+        <div class="tbl" style="position: absolute;">
         <table>
         <tr>
             <th>Тип дзвiнка</th>
@@ -17,7 +47,7 @@
                 <th></th>
                 <th></th>
                 <th>{{ incoming_interval_sum }}</th>
-                <th>Всього вхідних: {{ incoming_count }}</th>
+                <th id="incoming_count" value="{{ incoming_count }}">Всього вхідних: {{ incoming_count }}</th>
             </tr>
 
             {% for i in incoming_calls %}
@@ -31,16 +61,16 @@
             {% endfor %}
 
         {% endif %}
-        {% if outcaming_calls %}
+        {% if outcoming_calls %}
             <tr>
                 <th>Вихідні</th>
                 <th></th>
                 <th></th>
                 <th>{{ outcaming_interval_sum }}</th>
-                <th>Всього вихідних: {{ outcaming_count }}</th>
+                <th id="outcoming_count" value="{{ outcoming_count }}">Всього вихідних: {{ outcoming_count }}</th>
             </tr>
 
-            {% for i in outcaming_calls %}
+            {% for i in outcoming_calls %}
                 <tr>
                     <td>{{ i.type_call }}</td>
                     <td>{{ i.time_start|date:'Y-m-d H:i:s' }}</td>
@@ -61,5 +91,9 @@
         {% endif %}
 
         </table>
-    {% endif %}
-{#    </div>#}
+        </div>
+        {% if incoming_calls %}
+            <div id="piechart" style="width: 900px; height: 500px; float: right;"></div>
+        {% endif %}
+    </div>
+{% endif %}

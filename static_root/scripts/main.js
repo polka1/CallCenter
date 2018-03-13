@@ -9,27 +9,20 @@ if(typeof django == 'undefined') {
     $(document).ready(function() {
     var update_cycle = null;
 
-        $('#search_form').on('submit', function (evnt) {
-            if (update_cycle !== null){clearTimeout(update_cycle)}
-            update_cycle = setTimeout(update_form(evnt), 5000);
+        $('#search_form').on('submit', function (event) {
+            if (update_cycle !== null){clearInterval(update_cycle)}
+            obj = $(this);
+            var interval = $('input[name="update_time_sec"]').val();
+            console.log(interval);
+            update_form(event,obj)
         });
 
-    });
-
-    function listening() {
-            console.log("Set interval: "); // sanity check
-            console.log($('#id_update_time_sec').val())
-        }
-
-    function update_form (event) {
+    function update_form (event, obj) {
             event.preventDefault();
-            console.log("form submitted!");  // sanity check
-            listening();
-            var more = $(this);
+            var more = obj;
             var dateTime = $('input[name="time_start_0"]').val() + ' ' + $('input[name="time_start_1"]').val();
             var interval = $('input[name="update_time_sec"]').val();
-            console.log(dateTime, '\n', interval);
-            console.log(more.data('url'));
+            console.log('[ajax-update_form]: ', interval);
             $.ajax(more.data('url'), {
                 'type': 'GET',
                 'async': true,
@@ -39,13 +32,19 @@ if(typeof django == 'undefined') {
                     'interval': interval
                 },
                 'success': function (data) {
-                    // console.log(data);
                     $('#search_table').html(data);
-                    // for (var)
                 },
                 'error': function (xhr,status,error) {
                     console.log(error);
+                },
+                'complete': function () {
+                    var form = $('#search_form');
+                    update_cycle = setTimeout(function () {
+                        form.submit()
+                    }, interval*1000);
                 }
             })
+    }
+});
 
-}})(jq);
+})(jq);
