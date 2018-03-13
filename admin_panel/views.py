@@ -101,7 +101,7 @@ def check_data(request):
                 formated_pd_datetimeNow = pd.to_datetime(formated_datetimeNow).to_pydatetime()
                 print(formated_pd_formDatetime, '\n', formated_pd_datetimeNow)
                 print('update_time_sec: ', form.cleaned_data.get('update_time_sec'))
-                requested_form = CallInfo.objects.filter(time_start=formated_pd_formDatetime)#.order_by('-time_start')
+                requested_form = CallInfo.objects.filter(time_start__range=[formated_pd_formDatetime, formated_pd_datetimeNow])#.order_by('-time_start')
                 search_form = requested_form
         else:
             form = CheckCallForm()
