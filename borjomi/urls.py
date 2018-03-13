@@ -17,7 +17,8 @@ from django.conf.urls import url
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth.views import logout, LoginView
-from admin_panel.views import signup, index, profile, insert_data, check_data, i18n_javascript
+from admin_panel.views import signup, index, profile, insert_data, \
+    check_data, i18n_javascript, ajax_data_gen
 from django.views.i18n import JavaScriptCatalog
 
 
@@ -31,5 +32,6 @@ urlpatterns = [
     url(r'^admin/jsi18n', i18n_javascript),
     url('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
     url(r'accounts/login/', LoginView.as_view()),
-    url(r'^logout/$', logout, {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout')
+    url(r'^logout/$', logout, {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
+    url(r'^ajax_data_gen/$', ajax_data_gen, name='ajax_data_gen'),
 ]

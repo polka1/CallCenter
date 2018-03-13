@@ -34,42 +34,42 @@
 
 {% if request.user %}
     <a href="{% url 'profile' %}">Профiль</a> <a href="{% url 'insert_data' %}">Внести данi</a> <a href="{% url 'logout' %}">Вийти</a><br/>
-    <form method="post" id="search_form">
+    <form method="post" id="search_form" data-url="{% url 'ajax_data_gen' %}">
     {% csrf_token %}
     <table>
         {{ form.as_table }}
         <tr>
             <td></td>
-            <td><input type="submit" name="submit" value="Шукати запис" /></td>
+            <td><input type="submit" name="submit"  value="Шукати запис" /></td>
         </tr>
     </table>
     </form>
 
 {#    Эту форму нужно обновлять#}
     <div class="container" id="search_table">
-    {% if search_form %}
-        <table>
-        <tr>
-            <th>Тип дзвiнка</th>
-            <th>Час початку</th>
-            <th>Час закiнчення</th>
-            <th>Тривалiсть</th>
-            <th>Номер</th>
-        </tr>
-        {% for i in search_form %}
-            <tr>
-                <td>{{ i.type_call }}</td>
-                <td>{{ i.time_start }}</td>
-                <td>{{ i.time_end }}</td>
-                <td>{{ i.interval }}</td>
-                <td>{{ i.number }}</td>
-            </tr>
-        {% endfor %}
-        </table>
-    {% endif %}
+    {% include 'search_form.html' %}
+{#    {% if search_form %}#}
+{#        <table>#}
+{#        <tr>#}
+{#            <th>Тип дзвiнка</th>#}
+{#            <th>Час початку</th>#}
+{#            <th>Час закiнчення</th>#}
+{#            <th>Тривалiсть</th>#}
+{#            <th>Номер</th>#}
+{#        </tr>#}
+{#        {% for i in search_form %}#}
+{#            <tr>#}
+{#                <td>{{ i.type_call }}</td>#}
+{#                <td>{{ i.time_start|date:'Y-m-d H:i:s' }}</td>#}
+{#                <td>{{ i.time_end|date:'Y-m-d H:i:s' }}</td>#}
+{#                <td>{{ i.interval }}</td>#}
+{#                <td>{{ i.number }}</td>#}
+{#            </tr>#}
+{#        {% endfor %}#}
+{#        </table>#}
+{#    {% endif %}#}
     </div>
 {#    Эту форму нужно обновлять#}
-
 
 {% endif %}
 
