@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'admin_panel.apps.AdminPanelConfig',
-    'tornado_websockets',
 ]
 
 MIDDLEWARE = [
@@ -130,12 +129,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 LOGIN_REDIRECT_URL = '/profile/'
-
-
-TORNADO = {
-    'port': 1337,    # 8000 by default
-    'handlers': [],  # [] by default
-    'settings': {
-        'debug': True,
-    },  # {} by default
-}

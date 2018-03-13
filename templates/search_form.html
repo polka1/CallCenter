@@ -1,0 +1,65 @@
+{% load staticfiles %}
+
+{#Блок шаблона check_data#}
+{#<div class="container" id="search_table">#}
+    {% if sum_count_calls %}
+        <table>
+        <tr>
+            <th>Тип дзвiнка</th>
+            <th>Час початку</th>
+            <th>Час закiнчення</th>
+            <th>Тривалiсть</th>
+            <th>Номер</th>
+        </tr>
+        {% if incoming_calls %}
+            <tr>
+                <th>Вхідні</th>
+                <th></th>
+                <th></th>
+                <th>{{ incoming_interval_sum }}</th>
+                <th>Всього вхідних: {{ incoming_count }}</th>
+            </tr>
+
+            {% for i in incoming_calls %}
+                <tr>
+                    <td>{{ i.type_call }}</td>
+                    <td>{{ i.time_start|date:'Y-m-d H:i:s' }}</td>
+                    <td>{{ i.time_end|date:'Y-m-d H:i:s' }}</td>
+                    <td>{{ i.interval }}</td>
+                    <td>{{ i.number }}</td>
+                </tr>
+            {% endfor %}
+
+        {% endif %}
+        {% if outcaming_calls %}
+            <tr>
+                <th>Вихідні</th>
+                <th></th>
+                <th></th>
+                <th>{{ outcaming_interval_sum }}</th>
+                <th>Всього вихідних: {{ outcaming_count }}</th>
+            </tr>
+
+            {% for i in outcaming_calls %}
+                <tr>
+                    <td>{{ i.type_call }}</td>
+                    <td>{{ i.time_start|date:'Y-m-d H:i:s' }}</td>
+                    <td>{{ i.time_end|date:'Y-m-d H:i:s' }}</td>
+                    <td>{{ i.interval }}</td>
+                    <td>{{ i.number }}</td>
+                </tr>
+            {% endfor %}
+
+            <tr>
+                <th>Усього</th>
+                <th></th>
+                <th></th>
+                <th>{{ all_interval_sum }}</th>
+                <th>Усього дзвінків: {{ sum_count_calls}}</th>
+            </tr>
+
+        {% endif %}
+
+        </table>
+    {% endif %}
+{#    </div>#}

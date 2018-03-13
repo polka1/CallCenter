@@ -14,9 +14,6 @@ import datetime
 import pandas as pd
 
 
-
-from django.contrib import messages
-
 GROUP_INSER = 'Внесення даних'
 GROUP_CHECK = 'Перегляд даних'
 
